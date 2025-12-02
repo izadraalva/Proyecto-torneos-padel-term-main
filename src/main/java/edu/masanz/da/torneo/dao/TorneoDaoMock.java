@@ -13,12 +13,14 @@ public class TorneoDaoMock implements ITorneoDao {
     public boolean authenticate(String alias, String password) {
         // TODO 01: Implementar la autenticación de usuario
 
-
-
-
-
-
-
+        for (Usuario usuario : usuarios ) {
+            if (usuario != null) {
+                if (usuario.getAlias().equals(alias) &&
+                        usuario.getPassword().equals(password)) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -27,10 +29,12 @@ public class TorneoDaoMock implements ITorneoDao {
         // TODO 02: Implementar la búsqueda de usuario por alias
 
 
-
-
-
-
+        for (int i = 0; i < usuarios.length; i++) {
+            Usuario u = usuarios[i];
+            if (u != null && u.getAlias().equals(alias)) {
+                return u;
+            }
+        }
         return null;
     }
 
@@ -38,13 +42,16 @@ public class TorneoDaoMock implements ITorneoDao {
     public Usuario getUsuarioByNombre(String nombre) {
         // TODO 03: Implementar la búsqueda de usuario por nombre
 
-
-
-
-
-
+        for (int i = 0; i < usuarios.length; i++) {
+            Usuario u = usuarios[i];
+            if (u != null && u.getNombre().equals(nombre)) {
+                return u;
+            }
+        }
         return null;
     }
+
+
 
     @Override
     public TorneoFaseDto[] getTorneosFases() {
@@ -52,25 +59,36 @@ public class TorneoDaoMock implements ITorneoDao {
         // Este array no debe tener referencias nulas y su tamaño debe ser el justo
         TorneoFaseDto[] a = new TorneoFaseDto[torneos.length];
         int k = 0;
+        for (int i = 0; i < torneos.length; i++) {
+            Torneo t = torneos[i];
+            if(t!=null) {
 
+                int idFaseTorneo = t.getFase();
+                String nombreFaseTorneo = null;
+                //BUSCAR LA FASE QUE LE CORRESPONDE
+                for (int j = 0; j < fases.length; j++) {
+                    Fase f = fases[j];
+                    if (f.getId() == idFaseTorneo) {
+                        nombreFaseTorneo = f.getNombre();
+                    }
+                }
 
+                TorneoFaseDto tf = new TorneoFaseDto(t.getId(), t.getIdNombre(),nombreFaseTorneo);
+                a[k] = tf;
+                k++;
 
-
-
-
-
-
-
-
-
-
-
+            }
+        }
 
         return Arrays.copyOfRange(a, 0, k);
     }
 
     private String getNombreEquipo(int idEquipo) {
         // TODO 05: Implementar la obtención del nombre del equipo por su id
+
+
+
+
 
 
 
@@ -84,6 +102,10 @@ public class TorneoDaoMock implements ITorneoDao {
     public Torneo getTorneo(int idTorneo) {
         // TODO 06: Implementar la búsqueda de torneo por id
 
+        for ( Torneo torneo : torneos)
+            if( torneo.equals(idTorneo)) {
+                return torneo;
+            }
 
 
 
@@ -96,6 +118,11 @@ public class TorneoDaoMock implements ITorneoDao {
     public Torneo getTorneo(String nombreTorneo) {
         // TODO 07: Implementar la búsqueda de torneo por nombre
 
+
+        for ( Torneo torneo : torneos)
+            if( torneo.equals(nombreTorneo)) {
+                return torneo;
+            }
 
 
 
@@ -351,39 +378,6 @@ public class TorneoDaoMock implements ITorneoDao {
         // idFaseAnterior = FASE_SEMIFINALES_ID = 2, idFaseNueva = FASE_FINAL_ID = 4
         // Obtener un array auxiliar con los ids de los equipos ganadores de semifinales de los registros
         // Definir los partidos de tercer puesto y final con los ganadores y perdedores de semifinales en los registros
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
